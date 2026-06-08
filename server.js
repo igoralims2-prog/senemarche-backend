@@ -81,14 +81,16 @@ async function sendOTPEmail(email, name, context) {
 // ── Santé ─────────────────────────────────────────────────────
 app.get('/', (req, res) => res.json({ status: 'SenéMarché API — OK' }));
 
-// ── OTP : envoyer ─────────────────────────────────────────────
+// ── OTP : envoyer (le frontend se charge d'envoyer l'email via EmailJS) ───────
 app.post('/api/otp/send', async (req, res) => {
   const { email, name, context } = req.body;
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email))
     return res.status(400).json({ error: 'Email invalide' });
-  const result = await sendOTPEmail(email, name, context);
-  if (!result.ok) return res.status(500).json({ error: 'Erreur envoi email', detail: result.error });
-  res.json({ ok: true, message: 'Code envoyé à ' + email });
+  const code = genOTP();
+  saveOTP(email, code);
+  // On renvoie le code au frontend qui se charge de l'envoyer via EmailJS
+  // (EmailJS fonctionne uniquement depuis le navigateur)
+  res.json({ ok: true, code, message: 'Code généré' });
 });
 
 // ── OTP : vérifier ────────────────────────────────────────────
