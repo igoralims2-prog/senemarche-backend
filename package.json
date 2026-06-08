@@ -1,14 +1,14 @@
 {
-  "name": "sene_backend",
+  "name": "senemarche-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "API backend SenéMarché",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "@supabase/supabase-js": "^2.107.0",
     "cors": "^2.8.6",
