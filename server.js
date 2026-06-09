@@ -88,9 +88,8 @@ app.post('/api/otp/send', async (req, res) => {
     return res.status(400).json({ error: 'Email invalide' });
   const code = genOTP();
   saveOTP(email, code);
-  // On renvoie le code au frontend qui se charge de l'envoyer via EmailJS
-  // (EmailJS fonctionne uniquement depuis le navigateur)
-  res.json({ ok: true, code, message: 'Code généré' });
+  // _local:true signale au frontend d'envoyer l'email via EmailJS (navigateur)
+  res.json({ ok: true, _local: true, code, message: 'Code généré' });
 });
 
 // ── OTP : vérifier ────────────────────────────────────────────
